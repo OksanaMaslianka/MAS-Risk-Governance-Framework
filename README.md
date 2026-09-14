@@ -1,4 +1,4 @@
-# MAS Risk Governance Framework 🛡️
+# MAS Risk Governance Framework 
 
 **Open-Source Risk Management & Procurement Standard for Multi-Agent AI Systems (EU AI Act Compliant)**
 
