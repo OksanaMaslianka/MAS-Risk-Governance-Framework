@@ -16,12 +16,12 @@ This framework is an evolving open-source project. The goal is to provide action
   *A conceptual breakdown of 10 system-level vulnerabilities (e.g., Emergent Misalignment, Agentic Collusion) that traditional AI audits and red-teaming often miss.*
   
 * ⚖️ [**Procurement Clauses (OPZ/SWZ)**](./2_Procurement_Clauses_EU.md)
-  *Draft contractual controls (Zero-Trust Sandboxing, Token FinOps, Semantic Monitoring) designed to constrain vendor AI systems and ensure compliance with EU AI Act Article 15 (Robustness & Cybersecurity).*
+  *Draft contractual controls (Zero-Trust Sandboxing, Token FinOps, Semantic Monitoring) designed to constrain vendor AI systems and ensure compliance with EU AI Act Article 15 (Robustness & Cybersecurity)*
 
 ## The Approach
 Less abstract compliance. More operational control. 
 These artifacts are published to make governance reasoning, technical controls, and assumptions visible—and to continuously improve them through scrutiny.
 
 ---
-*Developed by [Oksana Maslianka](https://www.linkedin.com/in/oksana-maslianka)*  
-*Read the foundational thesis on Substack: [AI Governance Is Entering the Agentic Era](https://oksanamaslianka.substack.com)*
+Developed by [Oksana Maslianka](https://www.linkedin.com/in/oksana-maslianka)*  
+Read the foundational thesis on Substack: [AI Governance Is Entering the Agentic Era](https://oksanamaslianka.substack.com)*
