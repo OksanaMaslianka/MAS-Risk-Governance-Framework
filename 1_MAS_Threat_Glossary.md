@@ -62,4 +62,4 @@ Single-model audit frameworks - the CE marking, the point-in-time red-team repor
 
 ---
 
-*Written from the intersection of public-sector procurement, EU AI Act compliance, and systems thinking. Feedback and discussion welcome
+Written from the intersection of public-sector procurement, EU AI Act compliance, and systems thinking. Feedback and discussion welcome
