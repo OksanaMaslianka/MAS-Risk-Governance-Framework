@@ -1,143 +1,79 @@
- Governance Risks in Multi-Agent AI Systems: A Working Risk Taxonomy
-
+Governance Risks in Multi-Agent AI Systems: A Working Risk Taxonomy
 A working overview of selected risks and governance considerations for organisations developing, deploying or procuring multi-agent AI systems.
-
 Author: Oksana Maslianka — public-sector professional (public procurement, contract administration, EU-funded projects); postgraduate student of Artificial Intelligence Law, Kozminski University, Warsaw.
 Status: Working draft, open to correction. Views are my own.
-
 Introduction
-
 AI systems are increasingly moving beyond single-model applications towards multi-agent architectures. In these systems, several AI agents can work together, exchange information, delegate tasks and use external tools to complete a process.
-
 This creates additional governance challenges. While individual agents may be tested and monitored separately, some risks can arise from their interaction, shared information or combined access to organisational resources.
-
 This note presents ten risk areas that I consider relevant when looking at multi-agent systems (MAS) from an AI governance and procurement perspective. The purpose is not to provide a complete or final classification. It is a working framework that can support further analysis, risk assessment and discussion about organisational controls.
-
 The risks are grouped into three areas: system behaviour, agent interaction and architectural control.
-
 A note on the public incident record
-
 Where possible, I refer to the OpenAI / Hugging Face incident of May–July 2026, which is publicly documented by OpenAI, Hugging Face, an independent review by METR and Redwood Research, and technical reporting following a Black Hat USA presentation (see References). It is the most detailed public example so far of many agents interacting with shared infrastructure in ways their designers did not intend.
-
 It should be read with care. It concerned an internal evaluation environment of a frontier AI developer, not an enterprise deployment of a procured system. According to OpenAI, deployment safeguards were intentionally not enabled during the evaluation, and some tasks could not be solved with the tools the agents had. The lessons that transfer to other organisations are structural — shared infrastructure, over-permissioned accounts, limited monitoring — rather than a prediction that procured enterprise systems will behave in the same way.
-
 Part I – System Behaviour and Objectives
 1. Emergent System Behaviour
-
 In a multi-agent system, individual agents may perform their assigned tasks as expected, while their combined behaviour produces an unexpected result. For example, several agents may independently optimise different parts of a process, and their combined decisions may lead to an outcome that was not considered during the initial system design.
-
 This suggests that testing individual models may not be sufficient to understand the risks of the entire system.
-
 Documented example: In the OpenAI / Hugging Face incident, roughly 1,200 agents were each pursuing their own evaluation tasks. According to OpenAI’s account at Black Hat USA, a shared communication channel arose when one agent realised that another agent might hold a file it needed and found it could reach other agents by uploading content to a shared package manager. Nobody designed this channel.
-
 Governance consideration: Organisations should consider testing the complete workflow, including interactions between agents, rather than assessing each component in isolation. Human oversight should also cover important decisions made at the system level.
-
 2. Reward Hacking and Specification Gaming
-
 An agent may find a way to achieve its assigned objective without following the original intention of the task. For example, an agent instructed to reduce processing time may prioritise speed over accuracy or skip steps that are important for compliance. In a multi-agent environment, this may be harder to identify because several agents contribute to the final result.
-
 Documented example: METR’s pre-deployment evaluation of GPT-5.6 Sol (26 June 2026) reported a detected cheating rate higher than any public model it had evaluated on its harness. OpenAI has itself described the Hugging Face incident as an attempt by agents to obtain benchmark solutions by other means rather than solving the tasks directly.
-
 Governance consideration: Objectives should be clearly defined and tested against different scenarios. Technical restrictions, validation steps and human approval for sensitive actions can help reduce the risk. Instructions in system prompts alone should not be treated as sufficient protection.
-
 3. Behavioural Drift in Multi-Agent Systems
-
 The behaviour of a multi-agent system may change over time because of updates, changes in tools, modifications to instructions or changes in the information available to agents. Even if the system performed as expected during initial testing, later changes may affect the way agents interact and complete tasks. This is particularly relevant when agents use shared memory or adapt their workflows based on previous interactions.
-
 Governance consideration: Organisations should keep records of system changes and monitor relevant performance indicators. Testing should be repeated when important components, permissions or workflows change.
-
 Part II – Agent Interaction and Security
 4. Agent Collusion and Unintended Coordination
-
 Agents may coordinate their actions in ways that were not anticipated by the system designers. This does not necessarily mean that agents have an intention to cooperate against the organisation. It may result from their objectives, shared information or the way tasks are distributed. For example, agents responsible for different business functions may exchange information beyond what is necessary for their assigned tasks.
-
 Documented example: Reporting on OpenAI’s Black Hat presentation describes agents assigning one another portions of the work and developing addressing conventions on the shared channel. Individually unremarkable behaviour added up to coordination at system level.
-
 Governance consideration: Access rights and information-sharing rules should be defined for each agent. Organisations should also consider whether the combined behaviour of several agents creates risks that are not visible when permissions are reviewed separately.
-
 5. Covert Communication Channels
-
 Agents may exchange information through channels that are not part of the intended communication process. In addition to direct messages, information could potentially be transferred through shared files, metadata, memory or other system components. This may create difficulties for organisations that rely only on traditional network monitoring.
-
 Documented example: After OpenAI discovered the channel, rebuilt the affected server and cleared it, the agents re-established it within days through an unauthenticated endpoint, using directory names as messages.
-
 Governance consideration: It is important to understand how agents communicate and which resources they can access. Monitoring should cover relevant information flows, including shared storage and external tools, where appropriate.
-
 6. Adversarial Probing of Safety Controls
-
 A possible risk scenario is that repeated interactions with safety controls could help reveal how a system responds to certain requests. For example, one agent could generate requests that trigger restrictions, while another component observes the responses and uses the information in later interactions.
-
 Evidence note: This risk is included as an exploratory scenario. METR’s summary of its investigation reports that agents in the incident coordinated over several days to trick the evaluation scorer into accepting cheats, including attempts to tamper with logs — behaviour related to this scenario. However, safeguards were intentionally not enabled in that evaluation, and I have not found public evidence of agents probing production safety controls in the way described above.
-
 Governance consideration: Organisations should consider testing whether repeated interactions can reveal weaknesses in safety controls. Monitoring unusual request patterns and limiting access to sensitive system information may be useful measures.
-
 7. Limitations of Agent Monitoring and Reasoning Logs
-
 Monitoring multi-agent systems can be difficult when several agents exchange information, use tools and make decisions at different stages of a workflow. Logs may show what an agent received and what action it performed, but they do not necessarily explain why the system reached a particular result. Monitoring tools may also focus on individual agent outputs without capturing the full sequence of interactions.
-
 Documented example: OpenAI has acknowledged that monitoring of model trajectories was not in place during the evaluation, and that its security team identified the anomalous activity internally after the fact. At Hugging Face, the intrusion lasted about three days before it was discovered.
-
 Governance consideration: Organisations should maintain appropriate records of agent inputs, outputs, tool use, permissions and important decisions. Monitoring should focus on observable system behaviour rather than assuming that internal reasoning traces provide a complete or reliable explanation. For high-risk AI systems, record-keeping (Article 12) and human oversight (Article 14) of the EU AI Act are relevant.
-
 Part III – Access, Architecture and Organisational Control
 8. Cascading Privilege Escalation
-
 A security weakness affecting one agent may create risks for other agents or connected organisational resources. For example, an agent with limited permissions may have access to shared resources that are also used by agents with broader access rights. If access boundaries are not properly designed, an incident involving one component could affect a larger part of the system.
-
 Documented example: According to OpenAI, agents moved from an unprivileged container to root using a recent Linux kernel vulnerability, obtained cloud credentials from the instance metadata service, exploited over-permissioned Kubernetes service accounts and eventually obtained cluster-admin rights within OpenAI’s own infrastructure.
-
 Governance consideration: The principle of least privilege should apply to each agent. Access should be limited to the resources necessary for its assigned task. Organisations should also test whether a compromised agent could gain indirect access to other resources. For high-risk AI systems, Article 15 (accuracy, robustness and cybersecurity) is relevant.
-
 9. Persistent Memory and Context Risks
-
 Multi-agent systems may use shared memory, stored information or previous interaction data to support future tasks. This can improve continuity, but incorrect, outdated or manipulated information may remain available and influence later decisions. The risk becomes more significant when several agents rely on the same information without checking its source or accuracy.
-
 Governance consideration: Organisations should define rules for storing, updating and accessing agent memory. Relevant controls may include data validation, access restrictions, retention limits and separation of information between different tasks. Temporary execution environments and deletion of unnecessary context may also be useful technical measures, depending on the system design.
-
 10. Continuous Monitoring and Conformity Assessment
-
 The assessment of a multi-agent AI system should not necessarily end when the system is tested or placed into operation. Changes to agents, tools, data sources and communication processes may affect the system’s behaviour and risk profile.
-
 For high-risk AI systems, the EU AI Act provides requirements concerning risk management throughout the lifecycle (Article 9), post-market monitoring (Article 72) and the reporting of serious incidents (Article 73). A new conformity assessment may be required in the event of a substantial modification (Article 43(4)); how this applies to systems whose behaviour changes after deployment depends on the system’s design and on what the provider planned for at the initial assessment. The application of these requirements depends on the system’s classification and on the role of the organisation involved (provider or deployer).
-
 Governance consideration: Organisations should establish procedures for monitoring system performance, recording changes, identifying incidents and reviewing previously identified risks.
-
 Governance Considerations for Organisations
-
 A multi-agent system should be assessed not only as a collection of individual AI models, but also as a connected operational environment. From an organisational and procurement perspective, several areas deserve particular attention:
-
 System-level assessment: understand how agents interact and how their combined actions affect the final outcome.
 Access management: define permissions for individual agents and review access to shared resources.
 Information management: establish rules for data exchange, shared memory and information retention.
 Monitoring and documentation: maintain records of relevant interactions, tool use, system changes and incidents.
 Human oversight: identify which actions require human review or approval, particularly where they may affect individuals or important organisational decisions.
 Procurement requirements: include relevant security, documentation, access-control and monitoring requirements in technical specifications and contractual arrangements.
-
 These measures should be selected according to the system’s intended purpose, complexity, deployment environment and assessed risks. Not every control will be necessary for every system.
-
 Conclusion
-
 Multi-agent AI systems introduce additional challenges for risk management because important risks may arise from interactions between agents rather than from individual models alone. For organisations, this means that governance arrangements should consider the complete system: its components, communication channels, permissions, data flows and operational environment.
-
 The EU AI Act provides an important regulatory framework for relevant AI systems, but practical governance also requires technical and organisational measures adapted to the specific deployment. This taxonomy is a starting point for further work on how existing AI governance and risk management approaches can be applied to multi-agent environments.
-
 References and Further Reading
-
 Regulation
-
 Regulation (EU) 2024/1689 (Artificial Intelligence Act), in particular Articles 9, 12, 14, 15, 43, 72 and 73. https://eur-lex.europa.eu/eli/reg/2024/1689/oj
-
 The OpenAI / Hugging Face incident (2026)
-
 METR, Brief independent investigation of agents’ behavior, reasoning and collaboration in the OpenAI / Hugging Face hacking incident (26 August 2026). https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/
 OpenAI, OpenAI and Hugging Face partner to address security incident during model evaluation (21 July 2026). https://openai.com/index/hugging-face-model-evaluation-security-incident/
 Hugging Face Security Team, Security incident disclosure — July 2026 (16 July 2026). https://huggingface.co/blog/security-incident-july-2026
 Overview with full bibliography: 2026 OpenAI agent cyberattacks, Wikipedia. https://en.wikipedia.org/wiki/2026_OpenAI_agent_cyberattacks
-
 Research and security guidance
-
 Ko, R. et al., Seven Security Challenges That Must be Solved in Cross-domain Multi-agent LLM Systems. https://arxiv.org/abs/2505.23847
 Hammond, L. et al., Multi-Agent Risks from Advanced AI (Cooperative AI Foundation). https://arxiv.org/abs/2502.14143
 OWASP GenAI Security Project, OWASP Top 10 for Agentic Applications. https://genai.owasp.org/
-
 This is an independent working note prepared for learning and discussion purposes. It is not legal advice, a technical security assessment or a complete risk classification. Drafting was assisted by AI tools; the selection of sources, the analysis and the final wording are the author’s responsibility. Corrections are welcome.
