@@ -20,8 +20,8 @@ This framework is an evolving open-source project. The goal is to provide action
 
 ## The Approach
 Less abstract compliance. More operational control. 
-These artifacts are published to make governance reasoning, technical controls, and assumptions visible—and to continuously improve them through scrutiny.
+These artifacts are published to make governance reasoning, technical controls, and assumptions visible and to continuously improve them through scrutiny.
 
 ---
-Developed by [Oksana Maslianka](https://www.linkedin.com/in/oksana-maslianka)*  
-Read the foundational thesis on Substack: [AI Governance Is Entering the Agentic Era](https://oksanamaslianka.substack.com)*
+Developed by [Oksana Maslianka](https://www.linkedin.com/in/oksana-maslianka)
+Read the foundational thesis on Substack: [AI Governance Is Entering the Agentic Era](https://oksanamaslianka.substack.com)
